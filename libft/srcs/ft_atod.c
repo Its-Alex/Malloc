@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atod.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: malexand <malexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/06 16:15:41 by aguemy            #+#    #+#             */
-/*   Updated: 2017/11/20 00:23:17 by alex             ###   ########.fr       */
+/*   Updated: 2017/11/21 17:00:39 by malexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static double	ft_normed_atod(double final, const char *str, int i, int flag)
 	if (str[i] == '.')
 	{
 		j = i + 1;
-		while (str[j] < 58 && str[j] > 47 && j < PARSING_PRECISION)
+		while (str[j] < 58 && str[j] > 47 && j < ATOD_DECIMALES)
 		{
 			final += flag * (str[j] - 48) * ft_pow(0.1, j - i);
 			j++;

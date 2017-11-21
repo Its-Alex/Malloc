@@ -6,7 +6,7 @@
 /*   By: malexand <malexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/01 18:36:27 by alex              #+#    #+#             */
-/*   Updated: 2017/11/21 12:09:42 by malexand         ###   ########.fr       */
+/*   Updated: 2017/11/21 17:17:27 by malexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@
 # include <limits.h>
 # include <stdarg.h>
 
+# define true '1'
+# define false '0'
+
 # define BUFF_SIZE 32
 
-# define PARSING_PRECISION 10
+# define ATOD_DECIMALES 10
 
 typedef struct		s_list
 {

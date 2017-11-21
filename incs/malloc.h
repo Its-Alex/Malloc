@@ -1,18 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tool.h                                             :+:      :+:    :+:   */
+/*   malloc.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malexand <malexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 12:02:15 by malexand          #+#    #+#             */
-/*   Updated: 2017/11/21 12:03:15 by malexand         ###   ########.fr       */
+/*   Updated: 2017/11/21 19:01:49 by malexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOOL_H
-# define TOOL_H
+#ifndef MALLOC_H
+# define MALLOC_H
+
+# include <unistd.h>
+# include <stdlib.h>
+# include <sys/mman.h>
 
 # include <libft.h>
+
+# define TINY ((getpagesize() * 2) - sizeof(t_page) - 100 * sizeof(t_block)) / 100
+# define SMALL ((getpagesize() * 4) - sizeof(t_page) - 100 * sizeof(t_block)) / 100
+
+typedef struct		s_block
+{
+	char			empty;
+	void			*mem;
+	struct s_block	*next;
+}					t_block;
+
+typedef struct		s_page
+{
+	char			space_left;
+	void			*mem;
+	t_block			*block;
+	struct s_page	*next;
+}					t_page;
+
+void				free(void *ptr);
+void				*malloc(size_t size);
+void				*realloc(void *ptr, size_t size);
 
 #endif

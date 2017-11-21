@@ -6,7 +6,7 @@
 #    By: malexand <malexand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/08/21 18:23:32 by malexand          #+#    #+#              #
-#    Updated: 2017/11/21 12:09:59 by malexand         ###   ########.fr        #
+#    Updated: 2017/11/21 16:47:52 by malexand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,12 +26,6 @@ ifeq ($(DEBUG), yes)
 	CFLAGS = -std=c99 -pedantic -g -ggdb
 else
 	CFLAGS =  -Wall -Werror -Wextra
-endif
-
-ifeq ($(DEBUG), yes)
-	CFLAGS = 		-Wall -Werror -Wextra -g -ggdb
-else
-	CFLAGS = 		-Wall -Werror -Wextra -O3 -Ofast
 endif
 
 INCLUDE = -I./incs
