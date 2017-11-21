@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 22:20:16 by alex              #+#    #+#             */
-/*   Updated: 2017/11/21 22:34:00 by alex             ###   ########.fr       */
+/*   Updated: 2017/11/21 23:38:31 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,8 @@
 
 void			*alloc_mmap(size_t size)
 {
-	void *tmp;
-
-	tmp = (void *)mmap(NULL, size, PROT_READ | PROT_WRITE,
+	return mmap(NULL, size, PROT_READ | PROT_WRITE,
 					   MAP_ANON | MAP_PRIVATE, -1, 0);
-	printf("My_Malloc\n");
-	return tmp;
 }
 
 t_page			*new_page(size_t size)

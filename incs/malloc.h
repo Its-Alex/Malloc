@@ -6,12 +6,14 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 12:02:15 by malexand          #+#    #+#             */
-/*   Updated: 2017/11/21 22:33:31 by alex             ###   ########.fr       */
+/*   Updated: 2017/11/21 23:36:35 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MALLOC_H
 # define MALLOC_H
+
+# define _DEFAULT_SOURCE
 
 # include <unistd.h>
 # include <stdlib.h>
