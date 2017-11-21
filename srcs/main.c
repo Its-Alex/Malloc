@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 11:58:52 by malexand          #+#    #+#             */
-/*   Updated: 2017/11/21 23:42:40 by alex             ###   ########.fr       */
+/*   Updated: 2017/11/22 00:10:41 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int				main(void)
 {
 	char	*str;
 
-	mprintf(1, "%d\n%d\n", TINY, SMALL);
+	printf("Page size: %6d\nTINY: %9lu\nSMALL: %9lu\n", getpagesize(), TINY, SMALL);
 	if ((str = (char *)malloc(5 + 1)) != NULL)
 		ft_putstr(str);
 	return (0);
