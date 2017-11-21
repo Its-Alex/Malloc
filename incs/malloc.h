@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malexand <malexand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 12:02:15 by malexand          #+#    #+#             */
-/*   Updated: 2017/11/21 19:01:49 by malexand         ###   ########.fr       */
+/*   Updated: 2017/11/21 22:33:31 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ typedef struct		s_page
 	t_block			*block;
 	struct s_page	*next;
 }					t_page;
+
+void				*alloc_mmap(size_t size);
+t_page				*new_page(size_t size);
 
 void				free(void *ptr);
 void				*malloc(size_t size);

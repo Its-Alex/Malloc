@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: malexand <malexand@student.42.fr>          +#+  +:+       +#+         #
+#    By: alex <alex@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/08/21 18:23:32 by malexand          #+#    #+#              #
-#    Updated: 2017/11/21 17:12:08 by malexand         ###   ########.fr        #
+#    Updated: 2017/11/21 22:34:55 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 EXEC = malloc
 
-DEBUG = no
+DEBUG = yes
 CC = clang
 OS := $(shell uname -s)
 
@@ -21,7 +21,7 @@ HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
 
 ifeq ($(DEBUG), yes)
-	CFLAGS = -std=c99 -pedantic -g -ggdb
+	CFLAGS = -Wall -Werror -Wextra -std=c99 -pedantic -g -ggdb
 else
 	CFLAGS =  -Wall -Werror -Wextra
 endif

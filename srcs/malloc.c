@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malexand <malexand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 12:11:34 by malexand          #+#    #+#             */
-/*   Updated: 2017/11/21 19:19:55 by malexand         ###   ########.fr       */
+/*   Updated: 2017/11/21 22:32:42 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,6 @@ t_page g_pages[3] = {
 	{'1', NULL, NULL, NULL},
 	{'1', NULL, NULL, NULL}
 };
-
-static void		*alloc_mmap(size_t size)
-{
-	void *tmp;
-
-	tmp = (void *)mmap(NULL, size, PROT_READ | PROT_WRITE,
-					   MAP_ANON | MAP_PRIVATE, -1, 0);
-	printf("My_Malloc\n");
-	return tmp;
-}
 
 int				init(size_t size)
 {
@@ -50,19 +40,30 @@ size_t			getsize_page(size_t size)
 	else
 		return size;
 }
+ 
+void			*find_block(t_page *page, int type, size_t size)
+{
+	(void)page;
+	type = 0;
+	size = 0;
+	return NULL;
+}
 
-void			*find_block()
-
-void			*find_page(t_page *page, int type)
+void			*find_page(t_page *page, int type, size_t size)
 {
 	if (page == NULL)
 	{
-		if ((page = (t_page *)alloc_mmap(getsize_page(size))) == NULL)
+		if ((page = new_page(getsize_page(size))) == NULL)
 			return NULL;
-		page.space_left = true;
-		page.mem = page + sizeof(t_page) + 1;
-		page.next = NULL;
 	}
+	else if (page->space_left == false)
+	{
+		if (page->next == NULL)
+			if ((page->next = new_page(getsize_page(size))) == NULL)
+				return NULL;
+		return find_page(page->next, type, size);
+	}
+	return find_block(page, type, size);
 }
 
 void			*malloc(size_t size)
@@ -75,5 +76,5 @@ void			*malloc(size_t size)
 		if ((g_pages[type].mem = alloc_mmap(getsize_page(size))) == NULL)
 			return NULL;
 	}
-	return find_mem(type, g_pages[type], size);
+	return find_page(&g_pages[type], type, size);
 }
