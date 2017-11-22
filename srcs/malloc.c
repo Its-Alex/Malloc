@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: malexand <malexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 12:11:34 by malexand          #+#    #+#             */
-/*   Updated: 2017/11/21 23:12:56 by alex             ###   ########.fr       */
+/*   Updated: 2017/11/22 17:32:13 by malexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,46 @@ int				init(size_t size)
 	return (type);
 }
 
-size_t			getsize_page(size_t size)
+size_t			getsizealloc(size_t size)
 {
 	if (size <= TINY)
-		return (getpagesize() - sizeof(t_page)) * 2;
+		return ((getpagesize() - sizeof(t_page)) * 2);
 	else if (size <= SMALL)
-		return (getpagesize() - sizeof(t_page)) * 4;
+		return ((getpagesize() - sizeof(t_page)) * 4);
 	else
-		return size;
+		return (size);
 }
  
 void			*find_block(t_page *page, int type, size_t size)
 {
-	(void)page;
-	type = 0;
+	int			count;
+	t_block		*tmp;
+
+	count = -1;
 	size = 0;
+	if (page == NULL || page->block == NULL)
+		return NULL;
+	tmp = page->block;
+	while (++count < 100 && tmp != NULL)
+	{
+		if (tmp->empty == true)
+			return tmp->mem;
+		else
+		{
+			if (tmp->next == NULL)
+			{
+				if (type == 0)
+					tmp->next = new_block(tmp + TINY - sizeof(t_block) + 1);
+				if (type == 1)
+					tmp->next = new_block(tmp + SMALL - sizeof(t_block) + 1);
+				if (type == 2)
+					return (NULL);
+				tmp = tmp->next;
+			}
+			else 
+				tmp = tmp->next;
+		}
+	}
 	return NULL;
 }
 
@@ -53,13 +78,20 @@ void			*find_page(t_page *page, int type, size_t size)
 {
 	if (page == NULL)
 	{
-		if ((page = new_page(getsize_page(size))) == NULL)
+		if ((page = new_page(getsizealloc(size))) == NULL)
 			return NULL;
+	}
+	else if (page->mem == NULL)
+	{
+		if ((page->mem = alloc_mmap(getsizealloc(size))) == NULL)
+			return NULL;
+		page->block = new_block(page->mem);
+		page->next = NULL;
 	}
 	else if (page->space_left == false)
 	{
 		if (page->next == NULL)
-			if ((page->next = new_page(getsize_page(size))) == NULL)
+			if ((page->next = new_page(getsizealloc(size))) == NULL)
 				return NULL;
 		return find_page(page->next, type, size);
 	}
@@ -71,10 +103,5 @@ void			*malloc(size_t size)
 	int		type;
 
 	type = init(size);
-	if (g_pages[type].mem == NULL)
-	{
-		if ((g_pages[type].mem = alloc_mmap(getsize_page(size))) == NULL)
-			return NULL;
-	}
 	return find_page(&g_pages[type], type, size);
 }
