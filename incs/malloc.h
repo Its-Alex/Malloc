@@ -6,7 +6,7 @@
 /*   By: malexand <malexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 12:02:15 by malexand          #+#    #+#             */
-/*   Updated: 2017/11/22 17:42:41 by malexand         ###   ########.fr       */
+/*   Updated: 2017/11/22 18:13:59 by malexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct		s_block
 
 typedef struct		s_page
 {
-	char			space_left;
+	char			left;
 	void			*mem;
 	t_block			*block;
 	struct s_page	*next;
