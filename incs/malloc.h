@@ -6,7 +6,7 @@
 /*   By: malexand <malexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 12:02:15 by malexand          #+#    #+#             */
-/*   Updated: 2017/11/22 18:13:59 by malexand         ###   ########.fr       */
+/*   Updated: 2017/11/23 16:35:45 by malexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,20 @@
 typedef struct		s_block
 {
 	char			empty;
+	unsigned int	size_left_aft;
 	void			*mem;
 	struct s_block	*next;
 }					t_block;
 
 typedef struct		s_page
 {
-	char			left;
-	void			*mem;
+	unsigned int 	max_size_left;
 	t_block			*block;
 	struct s_page	*next;
 }					t_page;
 
-void				*alloc_mmap(size_t size);
+size_t				size_alloc(size_t size);
+
 t_page				*new_page(size_t size);
 t_block				*new_block(void *start);
 

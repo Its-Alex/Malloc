@@ -6,17 +6,16 @@
 /*   By: malexand <malexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 12:11:34 by malexand          #+#    #+#             */
-/*   Updated: 2017/11/22 17:32:13 by malexand         ###   ########.fr       */
+/*   Updated: 2017/11/23 16:30:08 by malexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <malloc.h>
 
 t_page g_pages[3] = {
-	{'1', NULL, NULL, NULL},
-	{'1', NULL, NULL, NULL},
-	{'1', NULL, NULL, NULL}
-};
+	{TINY_PAGE_SIZE, NULL, NULL, NULL},
+	{SMALL_PAGE_SIZE, NULL, NULL, NULL},
+	{0, NULL, NULL, NULL}};
 
 int				init(size_t size)
 {
@@ -29,16 +28,6 @@ int				init(size_t size)
 	else
 		type = 2;
 	return (type);
-}
-
-size_t			getsizealloc(size_t size)
-{
-	if (size <= TINY)
-		return ((getpagesize() - sizeof(t_page)) * 2);
-	else if (size <= SMALL)
-		return ((getpagesize() - sizeof(t_page)) * 4);
-	else
-		return (size);
 }
  
 void			*find_block(t_page *page, int type, size_t size)
@@ -78,12 +67,12 @@ void			*find_page(t_page *page, int type, size_t size)
 {
 	if (page == NULL)
 	{
-		if ((page = new_page(getsizealloc(size))) == NULL)
+		if ((page = new_page(size_alloc(size))) == NULL)
 			return NULL;
 	}
 	else if (page->mem == NULL)
 	{
-		if ((page->mem = alloc_mmap(getsizealloc(size))) == NULL)
+		if ((page->mem = alloc_mmap(size_alloc(size))) == NULL)
 			return NULL;
 		page->block = new_block(page->mem);
 		page->next = NULL;
@@ -91,7 +80,7 @@ void			*find_page(t_page *page, int type, size_t size)
 	else if (page->space_left == false)
 	{
 		if (page->next == NULL)
-			if ((page->next = new_page(getsizealloc(size))) == NULL)
+			if ((page->next = new_page(size_alloc(size))) == NULL)
 				return NULL;
 		return find_page(page->next, type, size);
 	}
