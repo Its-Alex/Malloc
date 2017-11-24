@@ -6,14 +6,14 @@
 #    By: alex <alex@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/08/21 18:23:32 by malexand          #+#    #+#              #
-#    Updated: 2017/11/21 22:34:55 by alex             ###   ########.fr        #
+#    Updated: 2017/11/24 18:54:27 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 EXEC = malloc
 
 DEBUG = yes
-CC = clang
+CC = gcc
 OS := $(shell uname -s)
 
 ifeq ($(HOSTTYPE),)

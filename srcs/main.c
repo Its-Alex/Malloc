@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malexand <malexand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 11:58:52 by malexand          #+#    #+#             */
-/*   Updated: 2017/11/22 17:03:10 by malexand         ###   ########.fr       */
+/*   Updated: 2017/11/24 18:53:06 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int				main(void)
 		ft_putstr(str);
 		ft_putchar('|');
 	}
+	printf("%s", str);
 	if ((str1 = (char *)malloc(5 + 1)) != NULL)
 	{
 		str1[0] = 'S';

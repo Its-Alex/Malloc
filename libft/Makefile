@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: malexand <malexand@student.42.fr>          +#+  +:+       +#+         #
+#    By: alex <alex@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/08/21 18:23:32 by malexand          #+#    #+#              #
-#    Updated: 2017/11/21 16:47:52 by malexand         ###   ########.fr        #
+#    Updated: 2017/11/24 18:54:35 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 EXEC = libft.a
 
 ifndef CC
-CC 					= clang
+CC 					= gcc
 endif
 ifndef DEBUG
 DEBUG 				= no

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malexand <malexand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 12:02:15 by malexand          #+#    #+#             */
-/*   Updated: 2017/11/23 16:35:45 by malexand         ###   ########.fr       */
+/*   Updated: 2017/11/24 18:51:41 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@
 
 typedef struct		s_block
 {
-	char			empty;
+	unsigned int	size;
 	unsigned int	size_left_aft;
 	void			*mem;
+	struct s_page	*page;
 	struct s_block	*next;
 }					t_block;
 
@@ -45,8 +46,9 @@ typedef struct		s_page
 
 size_t				size_alloc(size_t size);
 
-t_page				*new_page(size_t size);
-t_block				*new_block(void *start);
+t_page				*new_page(int size);
+t_block				*new_block(void *start, t_page *page, unsigned int size,
+						unsigned int left_aft);
 
 void				free(void *ptr);
 void				*malloc(size_t size);
