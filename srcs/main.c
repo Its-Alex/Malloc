@@ -6,7 +6,7 @@
 /*   By: alex <alex@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 11:58:52 by malexand          #+#    #+#             */
-/*   Updated: 2017/11/24 18:53:06 by alex             ###   ########.fr       */
+/*   Updated: 2017/11/25 23:50:31 by alex             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int				main(void)
 
 	printf("Page size: %6d\nTINY: %9lu\nSMALL: %9lu\n",
 		getpagesize(), TINY, SMALL);
-	if ((str = (char *)malloc(5 + 1)) != NULL)
+	if ((str = (char *)malloc(TINY - 1)) != NULL)
 	{
 		str[0] = 'S';
 		str[1] = 'a';
@@ -32,7 +32,7 @@ int				main(void)
 		ft_putchar('|');
 	}
 	printf("%s", str);
-	if ((str1 = (char *)malloc(5 + 1)) != NULL)
+	if ((str1 = (char *)malloc(SMALL - 1)) != NULL)
 	{
 		str1[0] = 'S';
 		str1[1] = 'a';
@@ -43,7 +43,7 @@ int				main(void)
 		ft_putstr(str1);
 		ft_putchar('|');
 	}
-	if ((str2 = (char *)malloc(5 + 1)) != NULL)
+	if ((str2 = (char *)malloc(SMALL * 2)) != NULL)
 	{
 		str2[0] = 'S';
 		str2[1] = 'a';
