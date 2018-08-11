@@ -6,15 +6,22 @@
 #    By: alex <alex@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/08/21 18:23:32 by malexand          #+#    #+#              #
-#    Updated: 2017/11/24 18:54:27 by alex             ###   ########.fr        #
+#    Updated: 2017/11/20 00:23:47 by alex             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 EXEC = malloc
 
-DEBUG = yes
-CC = gcc
+ifndef CC
+CC 					= clang
+endif
+ifndef DEBUG
+DEBUG 				= no
+endif
+
 OS := $(shell uname -s)
+DEPEND_FRAGMENT = Make.depend
+MAKEFLAGS += --silent
 
 ifeq ($(HOSTTYPE),)
 HOSTTYPE := $(shell uname -m)_$(shell uname -s)
@@ -52,7 +59,9 @@ ODIR =		./objs/
 OBJS =		$(SRCS:.c=.o)
 OBCC =		$(addprefix $(ODIR),$(OBJS))
 
-all: directories $(EXEC)
+all: directories $(EXEC) $(DEPEND_FRAGMENT)
+
+-include $(DEPEND_FRAGMENT)
 
 $(LIBFT_FILE): $(LIBFT_DEP)
 ifeq ($(OS), Linux)
@@ -72,16 +81,22 @@ else
 	@$(CC) $(CFLAGS) -o $@ $(OBCC) $(INCLUDE) $(LFLAGS)
 	@echo "\x1b[36m  + Compile program:\x1B[0m $@"
 	@echo "\x1B[31m\c"
-	@norminette srcs/* incs/* | grep -B 1 "Error" || true
+	# @norminette srcs/* incs/* | grep -B 1 "Error" || true
 	@echo "\x1B[0m\c"
 endif
 
+$(DEPEND_FRAGMENT): $(SRCC)
+	@touch $(DEPEND_FRAGMENT)
+	@makedepend -f $(DEPEND_FRAGMENT) -- -Y -O -DHACK $(CFLAGS) $(INCLUDE) -- $(SRCC) >& /dev/null
+	@sed 's/.\/srcs/.\/objs/g' $(DEPEND_FRAGMENT) > $(DEPEND_FRAGMENT).bak
+	@mv $(DEPEND_FRAGMENT).bak $(DEPEND_FRAGMENT)
+
 $(ODIR)%.o: $(SDIR)%.c
-	@$(CC) $^ $(CFLAGS) -c -o $@ $(INCLUDE)
+	$(CC) $< $(CFLAGS) -c -o $@ $(INCLUDE)
 ifeq ($(OS), Linux)
-	@echo -e "\r\x1B[32m  + Compile:\x1B[0m $(notdir $^)"
+	@echo -e "\r\x1B[32m  + Compile:\x1B[0m $(notdir $<)"
 else
-	@echo "\r\x1B[32m  + Compile:\x1B[0m $(notdir $^)"
+	@echo "\r\x1B[32m  + Compile:\x1B[0m $(notdir $<)"
 endif
 
 directories: ${OUT_DIR} ${SRC_DIR} ${INC_DIR}
